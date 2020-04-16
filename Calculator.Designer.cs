@@ -61,6 +61,7 @@
             // 
             // mainDisplay
             // 
+            this.mainDisplay.Cursor = System.Windows.Forms.Cursors.Default;
             this.mainDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mainDisplay.Location = new System.Drawing.Point(12, 11);
             this.mainDisplay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -72,6 +73,7 @@
             this.mainDisplay.TabStop = false;
             this.mainDisplay.Text = "0";
             this.mainDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.mainDisplay.WordWrap = false;
             // 
             // memoryDisplay
             // 
