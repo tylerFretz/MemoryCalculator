@@ -7,6 +7,7 @@ namespace _200433782A2
     public partial class Calculator : Form
     {
 
+        protected const String DefaultState = "0";
 
         public Calculator()
         {
@@ -14,19 +15,23 @@ namespace _200433782A2
         }
 
 
-        // Handles key presses
-        private void Calculator_KeyDown(object sender, KeyEventArgs e)
-        {
+        /*
+         * --------------------------------------------------------------------------------------------------------------------------
+         * Key presses
+         * --------------------------------------------------------------------------------------------------------------------------
+         */
 
+        protected void Calculator_KeyDown(object sender, KeyEventArgs e)
+        {
             String addedText = "";
 
             KeysConverter converter = new KeysConverter();
 
-            // if you want to do a switch based on key string
-            String key = converter.ConvertToString(e.KeyCode);
+            // if you want to do a switch based on key string. delete otherwise
+            string key = converter.ConvertToString(e.KeyCode);
 
-            // 
-            if (mainDisplay.Text.Equals("0"))
+            // Clear display so that new text != 0X
+            if (mainDisplay.Text.Equals(DefaultState))
             {
                 mainDisplay.Text = "";
             }
@@ -53,7 +58,7 @@ namespace _200433782A2
             // 0
             else if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
             {
-                if (mainDisplay.Text.Equals("0"))
+                if (mainDisplay.Text.Equals(DefaultState))
                 {
                     e.SuppressKeyPress = true;
                 }
@@ -180,7 +185,7 @@ namespace _200433782A2
 
             // TODO: put in parenthesis if double negative
             // Subtraction
-            else if (e.KeyCode == Keys.Subtract)
+            else if (e.KeyCode == Keys.Subtract || e.KeyCode == Keys.OemMinus && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
             {
                 if (mainDisplay.Text.EndsWith("-"))
                 {
@@ -200,8 +205,7 @@ namespace _200433782A2
             }
 
             // Addition
-            else if (e.KeyCode == Keys.Add || converter.ConvertToString(e.KeyCode).Equals("+") ||
-                e.KeyCode == Keys.Oemplus && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
+            else if (e.KeyCode == Keys.Add || e.KeyCode == Keys.Oemplus && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
             {
                 if (mainDisplay.Text.EndsWith("+"))
                 {
@@ -229,7 +233,7 @@ namespace _200433782A2
             // Escape
             else if (e.KeyCode == Keys.Escape)
             {
-                mainDisplay.Text = "0";
+                mainDisplay.Text = DefaultState;
             }
 
 
@@ -239,7 +243,7 @@ namespace _200433782A2
 
                 if (mainDisplay.Text.Length <= 1)
                 {
-                    mainDisplay.Text = "0";
+                    mainDisplay.Text = DefaultState;
                 }
                 else
                 {
@@ -250,24 +254,262 @@ namespace _200433782A2
             mainDisplay.Text += addedText;
         }
 
-       
+
+        /*
+         * --------------------------------------------------------------------------------------------------------------------------
+         * Button clicks
+         * --------------------------------------------------------------------------------------------------------------------------
+         */
 
 
-        private void Sqrt()
+
+        // Button 0
+        protected void Btn0_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text += "0";
+            }
+        }
+
+        // Button 1
+        protected void Btn1_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "1";
+            }
+            else
+            {
+                mainDisplay.Text += "1";
+            }
+        }
+
+        // Button 2
+        protected void Btn2_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "2";
+            }
+            else
+            {
+                mainDisplay.Text += "2";
+            }
+        }
+
+        // Button 3
+        protected void Btn3_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "3";
+            }
+            else
+            {
+                mainDisplay.Text += "3";
+            }
+        }
+
+        // Button 4
+        protected void Btn4_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "4";
+            }
+            else
+            {
+                mainDisplay.Text += "4";
+            }
+        }
+
+        // Button 5
+        protected void Btn5_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "5";
+            }
+            else
+            {
+                mainDisplay.Text += "5";
+            }
+        }
+
+        // Button 6
+        protected void Btn6_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "6";
+            }
+            else
+            {
+                mainDisplay.Text += "6";
+            }
+        }
+
+        // Button 7
+        protected void Btn7_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "7";
+            }
+            else
+            {
+                mainDisplay.Text += "7";
+            }
+        }
+
+        // Button 8
+        protected void Btn8_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "8";
+            }
+            else
+            {
+                mainDisplay.Text += "8";
+            }
+        }
+
+        // Button 9
+        protected void Btn9_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Equals(DefaultState))
+            {
+                mainDisplay.Text = "9";
+            }
+            else
+            {
+                mainDisplay.Text += "9";
+            }
+        }
+
+        // Button reciprocal
+        protected void BtnReciprocal_Click(object sender, EventArgs e)
+        {
+            Reciprocal();
+        }
+
+        // Button invert sign
+        protected void BtnPlusNeg_Click(object sender, EventArgs e)
+        {
+            PlusNeg();
+        }
+
+        // Button square root
+        protected void BtnSqrt_Click(object sender, EventArgs e)
+        {
+            Sqrt();
+        }
+
+        // Button Equals
+        protected void BtnEquals_Click(object sender, EventArgs e)
+        {
+            Calculate();
+        }
+
+        // Button clear
+        protected void BtnClear_Click(object sender, EventArgs e)
+        {
+            mainDisplay.Text = DefaultState;
+        }
+
+        // Button back
+        protected void BtnBack_Click(object sender, EventArgs e)
+        {
+            if (mainDisplay.Text.Length <= 1)
+            {
+                mainDisplay.Text = DefaultState;
+            }
+            else
+            {
+                mainDisplay.Text = mainDisplay.Text.Remove(mainDisplay.Text.Length - 1);
+            }
+        }
+
+        // Button opening bracket
+        protected void BtnLBracket_Click(object sender, EventArgs e)
+        {
+            mainDisplay.Text += "(";
+        }
+
+        // Button closing bracket
+        protected void BtnRBracket_Click(object sender, EventArgs e)
+        {
+            mainDisplay.Text += ")";
+        }
+
+        // Button decimal
+        protected void BtnDecimal_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.Contains("."))
+            {
+                mainDisplay.Text += ".";
+            }
+        }
+
+        // Button divide
+        protected void BtnDivide_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.EndsWith("/"))
+            {
+                mainDisplay.Text += "/";
+            }
+        }
+
+        // Button multiply
+        protected void BtnMultiply_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.EndsWith("*"))
+            {
+                mainDisplay.Text += "*";
+            }
+        }
+
+        // Button subtract
+        protected void BtnSubtract_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.EndsWith("-"))
+            {
+                mainDisplay.Text += "-";
+            }
+        }
+
+        // Button add
+        protected void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (!mainDisplay.Text.EndsWith("+"))
+            {
+                mainDisplay.Text += "+";
+            }
+        }
+
+        /*
+         * --------------------------------------------------------------------------------------------------------------------------
+         * Functions
+         * --------------------------------------------------------------------------------------------------------------------------
+         */
+      
+        protected void Sqrt()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
             Double newValue = Math.Sqrt(currentValue);
             mainDisplay.Text = newValue.ToString();
         }
 
-        private void Reciprocal()
+        protected void Reciprocal()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
             Double newValue = 1 / currentValue;
             mainDisplay.Text = newValue.ToString();
         }
 
-        private void PlusNeg()
+        protected void PlusNeg()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
             Double newValue = currentValue - (currentValue * 2);
@@ -276,36 +518,28 @@ namespace _200433782A2
 
 
         //TODO: probably should actually do this
-        private void Calculate()
+        protected void Calculate()
         {
             DataTable table = new DataTable();
-            object newValue = table.Compute(mainDisplay.Text, "");
-            mainDisplay.Text = newValue.ToString();
-        }
 
-        private void btnReciprocal_Click(object sender, EventArgs e)
-        {
-            Reciprocal();
-        }
+            try
+            {
+                object newValue = table.Compute(mainDisplay.Text, "");
 
-        private void btnPlusNeg_Click(object sender, EventArgs e)
-        {
-            PlusNeg();
-        }
-
-        private void btnSqrt_Click(object sender, EventArgs e)
-        {
-            Sqrt();
-        }
-
-        private void btnEquals_Click(object sender, EventArgs e)
-        {
-            Calculate();
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            mainDisplay.Text = "0";
+                // 2146435072 is hashcode for infinity symbol
+                if (newValue.GetHashCode() == 2146435072)
+                {
+                    mainDisplay.Text = "Cannot divide by zero";
+                }
+                else
+                {
+                    MessageBox.Show(newValue.GetHashCode().ToString());
+                }
+            }
+            catch (SyntaxErrorException)
+            {
+                mainDisplay.Text = "syntax error";
+            }
         }
     }
 }
