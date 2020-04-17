@@ -40,7 +40,7 @@ namespace _200433782A2
 
 
             // Clear display so that new display != 0 + addedText
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "";
             }
@@ -261,7 +261,7 @@ namespace _200433782A2
         // Button 0
         protected void Btn0_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "0";
             }
@@ -274,7 +274,7 @@ namespace _200433782A2
         // Button 1
         protected void Btn1_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "1";
             }
@@ -287,7 +287,7 @@ namespace _200433782A2
         // Button 2
         protected void Btn2_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "2";
             }
@@ -300,7 +300,7 @@ namespace _200433782A2
         // Button 3
         protected void Btn3_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "3";
             }
@@ -313,7 +313,7 @@ namespace _200433782A2
         // Button 4
         protected void Btn4_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "4";
             }
@@ -326,7 +326,7 @@ namespace _200433782A2
         // Button 5
         protected void Btn5_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "5";
             }
@@ -339,7 +339,7 @@ namespace _200433782A2
         // Button 6
         protected void Btn6_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "6";
             }
@@ -352,7 +352,7 @@ namespace _200433782A2
         // Button 7
         protected void Btn7_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "7";
             }
@@ -365,7 +365,7 @@ namespace _200433782A2
         // Button 8
         protected void Btn8_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "8";
             }
@@ -378,7 +378,7 @@ namespace _200433782A2
         // Button 9
         protected void Btn9_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            if (IsClearable())
             {
                 mainDisplay.Text = "9";
             }
@@ -409,7 +409,14 @@ namespace _200433782A2
         // Button Equals
         protected void BtnEquals_Click(object sender, EventArgs e)
         {
-            mainDisplay.Text = Calculate();
+            if (IsClearable())
+            {
+                mainDisplay.Text = defaultState;
+            }
+            else
+            {
+                mainDisplay.Text = Calculate();
+            }
         }
 
         // Button clear
@@ -581,6 +588,19 @@ namespace _200433782A2
             }
 
             return newDisplay;
+        }
+
+        /// <summary>
+        ///     Method to see if the text should be cleared (if display is showing error OR display = 0)
+        /// </summary>
+        /// <returns></returns>
+        private Boolean IsClearable()
+        {
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
