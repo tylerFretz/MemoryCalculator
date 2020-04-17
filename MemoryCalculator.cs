@@ -8,6 +8,10 @@ using System.Windows.Forms;
 
 namespace _200433782A2
 {
+
+    /// <summary>
+    ///     Extends base calculator with added ability to store a value in memory 
+    /// </summary>
     public partial class MemoryCalculator : _200433782A2.Calculator
     {
         private String memoryValue = "";
@@ -17,14 +21,22 @@ namespace _200433782A2
             InitializeComponent();
         }
 
-        // Clears the saved value
+        /// <summary>
+        ///     Clears the saved value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnMC_Click(object sender, EventArgs e)
         {
             memoryValue = "";
             memoryDisplay.Text = "";
         }
 
-        // Displays the saved value
+        /// <summary>
+        ///     Displays the saved value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnMR_Click(object sender, EventArgs e)
         {
             if (!memoryValue.Equals(""))
@@ -33,7 +45,11 @@ namespace _200433782A2
             }
         }
 
-        // Saves the value of the current display
+        /// <summary>
+        ///     Saves the value of the current display
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnMS_Click(object sender, EventArgs e)
         {
             String calculatedString = Calculate();
@@ -49,7 +65,11 @@ namespace _200433782A2
             }
         }
 
-        // Adds saved value to current display value
+        /// <summary>
+        ///     Adds saved value to current display value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnMPlus_Click(object sender, EventArgs e)
         {
             String calculatedString = Calculate();

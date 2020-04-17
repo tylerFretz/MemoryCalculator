@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace _200433782A2
 {
+    /// <summary>
+    ///     Base calculator class that handles simple calculations
+    /// </summary>
     public partial class Calculator : Form
     {
 
@@ -23,6 +27,11 @@ namespace _200433782A2
          * --------------------------------------------------------------------------------------------------------------------------
          */
 
+        /// <summary>
+        ///     Method that handles key presses
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Calculator_KeyDown(object sender, KeyEventArgs e)
         {
             String addedText = "";
@@ -43,9 +52,11 @@ namespace _200433782A2
             }
 
 
-            //
-            // Else-ifs for each valid input
-            //
+            /*
+            *----------------------------------------
+            * Else-ifs for each valid input
+            *----------------------------------------
+            */
 
             // Opening bracket
             else if (e.KeyCode == Keys.D9 && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
@@ -126,17 +137,20 @@ namespace _200433782A2
             // Decimal
             else if (e.KeyCode == Keys.Decimal || converter.ConvertToString(e.KeyCode).Equals("."))
             {
-                if (mainDisplay.Text.Contains("."))
+                if (IsDecimalAllowed())
                 {
-                    e.SuppressKeyPress = true;
-                }
-                else if (mainDisplay.Text.Equals("")) 
-                {           
-                  addedText = "0."; 
+                    if (mainDisplay.Text.Equals(""))
+                    {
+                        addedText = "0.";
+                    }
+                    else
+                    {
+                        addedText = ".";
+                    }
                 }
                 else
                 {
-                    addedText = ".";
+                    e.SuppressKeyPress = true;
                 }
             }
 
@@ -193,7 +207,7 @@ namespace _200433782A2
                 }
             }
 
-            // Enter or Equals
+            // Enter or Equals   ...Keys.Enter is not working
             else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Oemplus)
             {
                 toBeCleared = true;
@@ -242,7 +256,6 @@ namespace _200433782A2
          * Button clicks
          * --------------------------------------------------------------------------------------------------------------------------
          */
-
 
 
         // Button 0
@@ -352,7 +365,7 @@ namespace _200433782A2
         // Button 8
         protected void Btn8_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "8";
             }
@@ -365,7 +378,7 @@ namespace _200433782A2
         // Button 9
         protected void Btn9_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(defaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "9";
             }
@@ -433,7 +446,7 @@ namespace _200433782A2
         // Button decimal
         protected void BtnDecimal_Click(object sender, EventArgs e)
         {
-            if (!mainDisplay.Text.Contains("."))
+            if (IsDecimalAllowed())
             {
                 mainDisplay.Text += ".";
             }
@@ -480,7 +493,10 @@ namespace _200433782A2
          * Functions
          * --------------------------------------------------------------------------------------------------------------------------
          */
-      
+        
+        /// <summary>
+        ///     Sets main display to the square root of the display's current value
+        /// </summary>
         protected void Sqrt()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
@@ -488,6 +504,9 @@ namespace _200433782A2
             mainDisplay.Text = newValue.ToString();
         }
 
+        /// <summary>
+        ///     Sets main display to the reciprocal of the display's current value
+        /// </summary>
         protected void Reciprocal()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
@@ -495,6 +514,9 @@ namespace _200433782A2
             mainDisplay.Text = newValue.ToString();
         }
 
+        /// <summary>
+        ///     Sets main display to the inverse of the display's current value
+        /// </summary>
         protected void PlusNeg()
         {
             Double.TryParse(mainDisplay.Text, out double currentValue);
@@ -502,14 +524,30 @@ namespace _200433782A2
             mainDisplay.Text = newValue.ToString();
         }
 
-        protected Boolean LimitDecimals()
+        /// <summary>
+        ///     Limits the amount of decimals a number can have to 1
+        /// </summary>
+        protected bool IsDecimalAllowed()
         {
-            String[] numbers = mainDisplay.Text.Split();
-            return false;
+            String pattern = "[()-+*/]+";
+            String[] numbers = Regex.Split(mainDisplay.Text, pattern);
+
+            if (numbers[numbers.Length-1].Contains("."))
+            {
+                return false;
+            }
+
+            return true;
         }
 
 
-        // Uses DataTable's compute method to parse mainDisplay String and calculate value
+
+        /// <summary>
+        ///     This method uses DataTable's compute method to parse mainDisplay String and calculate value
+        /// </summary>
+        /// <returns>
+        ///     A string intended to be displayed in the main display
+        /// </returns>
         protected String Calculate()
         {
             DataTable table = new DataTable();
@@ -536,6 +574,10 @@ namespace _200433782A2
             catch (DivideByZeroException)
             {
                 newDisplay = divideByZeroErrorMsg;
+            }
+            catch (Exception)
+            {
+                newDisplay = defaultState;
             }
 
             return newDisplay;

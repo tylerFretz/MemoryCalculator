@@ -77,7 +77,8 @@
             // 
             // memoryDisplay
             // 
-            this.memoryDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memoryDisplay.Cursor = System.Windows.Forms.Cursors.Default;
+            this.memoryDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.memoryDisplay.Location = new System.Drawing.Point(9, 51);
             this.memoryDisplay.Margin = new System.Windows.Forms.Padding(2);
             this.memoryDisplay.Multiline = true;
@@ -328,7 +329,7 @@
             // btnDivide
             // 
             this.btnDivide.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDivide.Location = new System.Drawing.Point(209, 100);
+            this.btnDivide.Location = new System.Drawing.Point(257, 102);
             this.btnDivide.Margin = new System.Windows.Forms.Padding(2);
             this.btnDivide.Name = "btnDivide";
             this.btnDivide.Size = new System.Drawing.Size(42, 46);
@@ -340,7 +341,7 @@
             // btnMultiply
             // 
             this.btnMultiply.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMultiply.Location = new System.Drawing.Point(209, 151);
+            this.btnMultiply.Location = new System.Drawing.Point(255, 151);
             this.btnMultiply.Margin = new System.Windows.Forms.Padding(2);
             this.btnMultiply.Name = "btnMultiply";
             this.btnMultiply.Size = new System.Drawing.Size(42, 44);
@@ -377,7 +378,7 @@
             // 
             this.btnSqrt.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSqrt.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnSqrt.Location = new System.Drawing.Point(256, 100);
+            this.btnSqrt.Location = new System.Drawing.Point(209, 102);
             this.btnSqrt.Margin = new System.Windows.Forms.Padding(2);
             this.btnSqrt.Name = "btnSqrt";
             this.btnSqrt.Size = new System.Drawing.Size(42, 46);
@@ -390,7 +391,7 @@
             // 
             this.btnReciprocal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReciprocal.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btnReciprocal.Location = new System.Drawing.Point(256, 151);
+            this.btnReciprocal.Location = new System.Drawing.Point(209, 150);
             this.btnReciprocal.Margin = new System.Windows.Forms.Padding(2);
             this.btnReciprocal.Name = "btnReciprocal";
             this.btnReciprocal.Size = new System.Drawing.Size(42, 44);
@@ -414,6 +415,7 @@
             // btnLBracket
             // 
             this.btnLBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLBracket.ForeColor = System.Drawing.Color.SteelBlue;
             this.btnLBracket.Location = new System.Drawing.Point(209, 52);
             this.btnLBracket.Margin = new System.Windows.Forms.Padding(2);
             this.btnLBracket.Name = "btnLBracket";
@@ -426,6 +428,7 @@
             // btnRBracket
             // 
             this.btnRBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRBracket.ForeColor = System.Drawing.Color.SteelBlue;
             this.btnRBracket.Location = new System.Drawing.Point(256, 52);
             this.btnRBracket.Margin = new System.Windows.Forms.Padding(2);
             this.btnRBracket.Name = "btnRBracket";

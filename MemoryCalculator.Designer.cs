@@ -50,6 +50,35 @@
             // 
             this.btnMPlus.Click += new System.EventHandler(this.BtnMPlus_Click);
             // 
+            // btnDivide
+            // 
+            this.btnDivide.Location = new System.Drawing.Point(255, 100);
+            // 
+            // btnMultiply
+            // 
+            this.btnMultiply.Location = new System.Drawing.Point(255, 152);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Size = new System.Drawing.Size(43, 48);
+            // 
+            // btnSqrt
+            // 
+            this.btnSqrt.Location = new System.Drawing.Point(210, 100);
+            // 
+            // btnReciprocal
+            // 
+            this.btnReciprocal.Location = new System.Drawing.Point(210, 151);
+            // 
+            // btnLBracket
+            // 
+            this.btnLBracket.ForeColor = System.Drawing.Color.SteelBlue;
+            // 
+            // btnRBracket
+            // 
+            this.btnRBracket.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btnRBracket.Location = new System.Drawing.Point(255, 52);
+            // 
             // MemoryCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
