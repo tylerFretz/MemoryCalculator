@@ -16,7 +16,7 @@ namespace _200433782A2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Calculator());
+            Application.Run(new MemoryCalculator());
         }
     }
 }

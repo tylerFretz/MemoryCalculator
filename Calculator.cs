@@ -7,7 +7,9 @@ namespace _200433782A2
     public partial class Calculator : Form
     {
 
-        protected const String DefaultState = "0";
+        protected const String defaultState = "0";
+        protected const String divideByZeroErrorMsg = "Cannot divide by zero";
+        protected const String syntaxErrorMsg = "Syntax error";
 
         public Calculator()
         {
@@ -24,24 +26,26 @@ namespace _200433782A2
         protected void Calculator_KeyDown(object sender, KeyEventArgs e)
         {
             String addedText = "";
-
+            bool toBeCleared = false;
             KeysConverter converter = new KeysConverter();
 
-            // if you want to do a switch based on key string. delete otherwise
-            string key = converter.ConvertToString(e.KeyCode);
 
-            // Clear display so that new text != 0X
-            if (mainDisplay.Text.Equals(DefaultState))
+            // Clear display so that new display != 0 + addedText
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "";
             }
-
 
             // So text does not extend past display length
             if (mainDisplay.Text.Length > 24)
             {
                 e.SuppressKeyPress = true;
             }
+
+
+            //
+            // Else-ifs for each valid input
+            //
 
             // Opening bracket
             else if (e.KeyCode == Keys.D9 && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
@@ -52,20 +56,16 @@ namespace _200433782A2
             // Closing bracket
             else if (e.KeyCode == Keys.D0 && (e.Modifiers == Keys.RShiftKey || e.Modifiers == Keys.Shift))
             {
-                addedText = ")";
+                if (!mainDisplay.Text.Equals(defaultState))
+                {
+                    addedText = ")";
+                }
             }
 
             // 0
             else if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
             {
-                if (mainDisplay.Text.Equals(DefaultState))
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else
-                {
-                    addedText = "0";
-                }
+                addedText = "0";
             }
 
             // 1
@@ -130,16 +130,13 @@ namespace _200433782A2
                 {
                     e.SuppressKeyPress = true;
                 }
+                else if (mainDisplay.Text.Equals("")) 
+                {           
+                  addedText = "0."; 
+                }
                 else
                 {
-                    if (mainDisplay.Text.Equals(""))
-                    {
-                        mainDisplay.Text = "0.";
-                    }
-                    else
-                    {
-                        addedText = ".";
-                    }
+                    addedText = ".";
                 }
             }
 
@@ -152,14 +149,7 @@ namespace _200433782A2
                 }
                 else
                 {
-                    if (mainDisplay.Text.Equals(""))
-                    {
-                        addedText = "0/";
-                    }
-                    else
-                    {
-                        addedText = "/";
-                    }
+                    addedText = "/";
                 }
             }
 
@@ -172,14 +162,7 @@ namespace _200433782A2
                 }
                 else
                 {
-                    if (mainDisplay.Text.Equals(""))
-                    {
-                        addedText = "0*";
-                    }
-                    else
-                    {
-                        addedText = "*";
-                    }
+                    addedText = "*";
                 }
             }
 
@@ -193,14 +176,7 @@ namespace _200433782A2
                 }
                 else
                 {
-                    if (mainDisplay.Text.Equals(""))
-                    {
-                        addedText = "0-";
-                    }
-                    else
-                    {
-                        addedText = "-";
-                    }
+                    addedText = "-";
                 }
             }
 
@@ -213,42 +189,48 @@ namespace _200433782A2
                 }
                 else
                 {
-                    if (mainDisplay.Text.Equals(""))
-                    {
-                        addedText = "0+";
-                    }
-                    else
-                    {
-                        addedText = "+";
-                    }
+                    addedText = "+";
                 }
             }
 
             // Enter or Equals
             else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Oemplus)
             {
-                Calculate();
+                toBeCleared = true;
+                addedText = Calculate();
             }
-
+            
             // Escape
             else if (e.KeyCode == Keys.Escape)
             {
-                mainDisplay.Text = DefaultState;
+                mainDisplay.Text = defaultState;
             }
 
 
-            // Backspace
+            // Backspace   ...no idea why the Enter key is triggering this
             else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
             {
-
                 if (mainDisplay.Text.Length <= 1)
                 {
-                    mainDisplay.Text = DefaultState;
+                    mainDisplay.Text = defaultState;
+                    toBeCleared = false;
                 }
                 else
                 {
                     mainDisplay.Text = mainDisplay.Text.Remove(mainDisplay.Text.Length - 1);
                 }
+            }
+
+            // Don't allow unused key presses
+            else
+            {
+                e.SuppressKeyPress = true;
+            }
+
+            // Clear display if preforming calculation 
+            if (toBeCleared)
+            {
+                mainDisplay.Text = "";
             }
 
             mainDisplay.Text += addedText;
@@ -266,7 +248,11 @@ namespace _200433782A2
         // Button 0
         protected void Btn0_Click(object sender, EventArgs e)
         {
-            if (!mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
+            {
+                mainDisplay.Text = "0";
+            }
+            else
             {
                 mainDisplay.Text += "0";
             }
@@ -275,7 +261,7 @@ namespace _200433782A2
         // Button 1
         protected void Btn1_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "1";
             }
@@ -288,7 +274,7 @@ namespace _200433782A2
         // Button 2
         protected void Btn2_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "2";
             }
@@ -301,7 +287,7 @@ namespace _200433782A2
         // Button 3
         protected void Btn3_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "3";
             }
@@ -314,7 +300,7 @@ namespace _200433782A2
         // Button 4
         protected void Btn4_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "4";
             }
@@ -327,7 +313,7 @@ namespace _200433782A2
         // Button 5
         protected void Btn5_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "5";
             }
@@ -340,7 +326,7 @@ namespace _200433782A2
         // Button 6
         protected void Btn6_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "6";
             }
@@ -353,7 +339,7 @@ namespace _200433782A2
         // Button 7
         protected void Btn7_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState) || mainDisplay.Text.Equals(divideByZeroErrorMsg) || mainDisplay.Text.Equals(syntaxErrorMsg))
             {
                 mainDisplay.Text = "7";
             }
@@ -366,7 +352,7 @@ namespace _200433782A2
         // Button 8
         protected void Btn8_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState))
             {
                 mainDisplay.Text = "8";
             }
@@ -379,7 +365,7 @@ namespace _200433782A2
         // Button 9
         protected void Btn9_Click(object sender, EventArgs e)
         {
-            if (mainDisplay.Text.Equals(DefaultState))
+            if (mainDisplay.Text.Equals(defaultState))
             {
                 mainDisplay.Text = "9";
             }
@@ -410,13 +396,13 @@ namespace _200433782A2
         // Button Equals
         protected void BtnEquals_Click(object sender, EventArgs e)
         {
-            Calculate();
+            mainDisplay.Text = Calculate();
         }
 
         // Button clear
         protected void BtnClear_Click(object sender, EventArgs e)
         {
-            mainDisplay.Text = DefaultState;
+            mainDisplay.Text = defaultState;
         }
 
         // Button back
@@ -424,7 +410,7 @@ namespace _200433782A2
         {
             if (mainDisplay.Text.Length <= 1)
             {
-                mainDisplay.Text = DefaultState;
+                mainDisplay.Text = defaultState;
             }
             else
             {
@@ -516,11 +502,18 @@ namespace _200433782A2
             mainDisplay.Text = newValue.ToString();
         }
 
+        protected Boolean LimitDecimals()
+        {
+            String[] numbers = mainDisplay.Text.Split();
+            return false;
+        }
 
-        //TODO: probably should actually do this
-        protected void Calculate()
+
+        // Uses DataTable's compute method to parse mainDisplay String and calculate value
+        protected String Calculate()
         {
             DataTable table = new DataTable();
+            string newDisplay;
 
             try
             {
@@ -529,17 +522,23 @@ namespace _200433782A2
                 // 2146435072 is hashcode for infinity symbol
                 if (newValue.GetHashCode() == 2146435072)
                 {
-                    mainDisplay.Text = "Cannot divide by zero";
+                    newDisplay = divideByZeroErrorMsg;
                 }
                 else
                 {
-                    MessageBox.Show(newValue.GetHashCode().ToString());
+                    newDisplay = newValue.ToString();
                 }
             }
             catch (SyntaxErrorException)
             {
-                mainDisplay.Text = "syntax error";
+                newDisplay = syntaxErrorMsg;
             }
+            catch (DivideByZeroException)
+            {
+                newDisplay = divideByZeroErrorMsg;
+            }
+
+            return newDisplay;
         }
     }
 }
